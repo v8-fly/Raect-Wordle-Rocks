@@ -9,16 +9,17 @@ describe("getRandomWord", () => {
 })
 
 describe("computeGuess", () => {
-  it("works with match and present", () => {
+  test("works with match and presents", () => {
     expect(computeGuess("boost", "basic")).toEqual([
       LettersState.Match,
       LettersState.Miss,
       LettersState.Miss,
-      LettersState.Pesent,
+      LettersState.Present,
       LettersState.Miss,
     ])
   })
-  it("works with all matches", () => {
+
+  test("full match", () => {
     expect(computeGuess("boost", "boost")).toEqual([
       LettersState.Match,
       LettersState.Match,
@@ -27,12 +28,47 @@ describe("computeGuess", () => {
       LettersState.Match,
     ])
   })
-  it("works with full Miss", () => {
-    expect(computeGuess("azzzz", "boost")).toEqual([
+
+  test("full miss", () => {
+    expect(computeGuess("guard", "boost")).toEqual([
       LettersState.Miss,
       LettersState.Miss,
       LettersState.Miss,
       LettersState.Miss,
+      LettersState.Miss,
+    ])
+  })
+
+  test("only does one match when two letters exist", () => {
+    expect(computeGuess("solid", "boost")).toEqual([
+      LettersState.Present,
+      LettersState.Match,
+      LettersState.Miss,
+      LettersState.Miss,
+      LettersState.Miss,
+    ])
+  })
+
+  test("returns empty array when given incomplete guess", () => {
+    expect(computeGuess("so", "boost")).toEqual([])
+  })
+
+  test("when 2 letters are present but answer has only 1 of those letters", () => {
+    expect(computeGuess("allol", "smelt")).toEqual([
+      LettersState.Miss,
+      LettersState.Present,
+      LettersState.Miss,
+      LettersState.Miss,
+      LettersState.Miss,
+    ])
+  })
+
+  test("when 1 letter matches but guess has more of the same letter", () => {
+    expect(computeGuess("allol", "colon")).toEqual([
+      LettersState.Miss,
+      LettersState.Miss,
+      LettersState.Match,
+      LettersState.Match,
       LettersState.Miss,
     ])
   })
