@@ -11,7 +11,13 @@ const getRandomWord = () => {
   return wordBank[randomIndex]
 }
 
-const computeGuess = (guess: string, answerString: string): LettersState[] => {
+const word = getRandomWord()
+console.log("RandomWord", word)
+
+const computeGuess = (
+  guess: string,
+  answerString: string = word
+): LettersState[] => {
   const result: LettersState[] = []
 
   if (guess.length !== answerString.length) {
